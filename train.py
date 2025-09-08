@@ -210,7 +210,6 @@ def train(params, args, local_rank, world_rank, world_size):
     t2 = time.time()
     tottime = t2 - t1
 
-
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument("--run_num", default="00", type=str, help="tag for indexing the current experiment")
@@ -283,29 +282,30 @@ if __name__ == "__main__":
     expDir = os.path.join(
         baseDir, args.config + "/%dGPU/" % (world_size) + str(run_num) + "/"
     )
+
     if world_rank == 0:
-    # --- Ensure expDir is writable ---
+        # --- Ensure expDir is writable ---
         log_root = os.environ.get("LOG_DIR")
-    if log_root:
-        # preserve the leaf name from original expDir
-        leaf = os.path.basename(expDir.rstrip("/")) or "run"
-        expDir = os.path.join(log_root, leaf)
-    else:
-        # if expDir was pointing to /logs/... redirect to ./logs/<leaf>
-        if os.path.isabs(expDir) and expDir.startswith("/logs"):
+        if log_root:
+            # preserve the leaf name from original expDir
             leaf = os.path.basename(expDir.rstrip("/")) or "run"
-            expDir = os.path.join(os.getcwd(), "logs", leaf)
+            expDir = os.path.join(log_root, leaf)
+        else:
+            # if expDir was pointing to /logs/... redirect to ./logs/<leaf>
+            if os.path.isabs(expDir) and expDir.startswith("/logs"):
+                leaf = os.path.basename(expDir.rstrip("/")) or "run"
+                expDir = os.path.join(os.getcwd(), "logs", leaf)
 
-    # now create the directory safely
-    os.makedirs(expDir, exist_ok=True)
+        # now create the directory safely
+        os.makedirs(expDir, exist_ok=True)
 
-    logging_utils.log_to_file(
-        logger_name=None, log_filename=os.path.join(expDir, "out.log")
-    )
-    params.log()
-    args.tboard_writer = SummaryWriter(log_dir=os.path.join(expDir, "logs/"))
+        logging_utils.log_to_file(
+            logger_name=None, log_filename=os.path.join(expDir, "out.log")
+        )
+        params.log()
+        args.tboard_writer = SummaryWriter(log_dir=os.path.join(expDir, "logs/"))
 
-params.experiment_dir = os.path.abspath(expDir)
+    params.experiment_dir = os.path.abspath(expDir)
 
     # if world_rank == 0:
     #     if not os.path.isdir(expDir):
