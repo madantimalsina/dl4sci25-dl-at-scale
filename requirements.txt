@@ -5,3 +5,4 @@ torchaudio
 tensorboard
 xarray
 netCDF4
+ruamel.yaml
