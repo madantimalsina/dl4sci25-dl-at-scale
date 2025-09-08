@@ -283,7 +283,7 @@ if __name__ == "__main__":
     expDir = os.path.join(
         baseDir, args.config + "/%dGPU/" % (world_size) + str(run_num) + "/"
     )
-if world_rank == 0:
+    if world_rank == 0:
     # --- Ensure expDir is writable ---
     log_root = os.environ.get("LOG_DIR")
     if log_root:
