@@ -6,3 +6,7 @@ tensorboard
 xarray
 netCDF4
 ruamel.yaml
+h5py
+netCDF4
+xarray
+tqdm
