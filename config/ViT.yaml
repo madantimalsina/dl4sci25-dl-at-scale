@@ -15,6 +15,7 @@ base: &base
   amp_mode: none
   enable_jit: false
   # expdir: '/logs'
+  mkdir -p /pscratch/sd/m/madan12/clearml_logs
   expdir: '/pscratch/sd/m/madan12/clearml_logs'
   lr_schedule: 'cosine'
   lr: 5E-4
