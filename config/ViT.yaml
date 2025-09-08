@@ -14,7 +14,8 @@ base: &base
   num_iters: 30000
   amp_mode: none
   enable_jit: false
-  expdir: '/logs'
+  # expdir: '/logs'
+  expdir: '/pscratch/sd/d/dasml/clearml_logs'
   lr_schedule: 'cosine'
   lr: 5E-4
   warmup: 0
