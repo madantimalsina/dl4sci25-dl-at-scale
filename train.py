@@ -285,7 +285,7 @@ if __name__ == "__main__":
     )
     if world_rank == 0:
     # --- Ensure expDir is writable ---
-    log_root = os.environ.get("LOG_DIR")
+        log_root = os.environ.get("LOG_DIR")
     if log_root:
         # preserve the leaf name from original expDir
         leaf = os.path.basename(expDir.rstrip("/")) or "run"
