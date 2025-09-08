@@ -284,15 +284,41 @@ if __name__ == "__main__":
         baseDir, args.config + "/%dGPU/" % (world_size) + str(run_num) + "/"
     )
     if world_rank == 0:
-        if not os.path.isdir(expDir):
-            os.makedirs(expDir)
-        logging_utils.log_to_file(
-            logger_name=None, log_filename=os.path.join(expDir, "out.log")
-        )
-        params.log()
-        args.tboard_writer = SummaryWriter(log_dir=os.path.join(expDir, "logs/"))
+    # --- Ensure expDir is writable ---
+    import os
 
-    params.experiment_dir = os.path.abspath(expDir)
+    log_root = os.environ.get("LOG_DIR")
+    if log_root:
+        # preserve the leaf name from original expDir
+        leaf = os.path.basename(expDir.rstrip("/")) or "run"
+        expDir = os.path.join(log_root, leaf)
+    else:
+        # if expDir was pointing to /logs/... redirect to ./logs/<leaf>
+        if os.path.isabs(expDir) and expDir.startswith("/logs"):
+            leaf = os.path.basename(expDir.rstrip("/")) or "run"
+            expDir = os.path.join(os.getcwd(), "logs", leaf)
+
+    # now create the directory safely
+    os.makedirs(expDir, exist_ok=True)
+
+    logging_utils.log_to_file(
+        logger_name=None, log_filename=os.path.join(expDir, "out.log")
+    )
+    params.log()
+    args.tboard_writer = SummaryWriter(log_dir=os.path.join(expDir, "logs/"))
+
+params.experiment_dir = os.path.abspath(expDir)
+
+    # if world_rank == 0:
+    #     if not os.path.isdir(expDir):
+    #         os.makedirs(expDir)
+    #     logging_utils.log_to_file(
+    #         logger_name=None, log_filename=os.path.join(expDir, "out.log")
+    #     )
+    #     params.log()
+    #     args.tboard_writer = SummaryWriter(log_dir=os.path.join(expDir, "logs/"))
+
+    # params.experiment_dir = os.path.abspath(expDir)
 
     train(params, args, local_rank, world_rank, world_size)
 
