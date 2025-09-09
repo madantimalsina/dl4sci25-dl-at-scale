@@ -16,7 +16,7 @@ base: &base
   enable_jit: false
   expdir: './logs'
   # mkdir -p /mscratch/sd/m/madan12/ClearML/clearml_logs
-  expdir: '/mscratch/sd/m/madan12/ClearML/clearml_logs'
+  # expdir: '/mscratch/sd/m/madan12/ClearML/clearml_logs'
   lr_schedule: 'cosine'
   lr: 5E-4
   warmup: 0
