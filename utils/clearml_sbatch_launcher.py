@@ -35,8 +35,8 @@ def main():
     paths = {
         # "data_dir": "/pscratch/sd/s/shas1693/data/dl-at-scale-training-data",
         "data_dir": "/mscratch/sd/d/dasml/sc24_tutorial_data",
-        "log_path": os.path.join(os.environ.get("SCRATCH", "/tmp"), "dl-at-scale-training", "logs"),
-        "run_dir":  "/mscratch/sd/m/madan12/ClearML/clearml_logs/${SLURM_JOB_ID}",
+        # "log_path": os.path.join(os.environ.get("SCRATCH", "/tmp"), "dl-at-scale-training", "logs"),
+        # "run_dir":  "/mscratch/sd/m/madan12/ClearML/clearml_logs/${SLURM_JOB_ID}",
     }
     git = {
         "repo":   "https://github.com/madantimalsina/dl4sci25-dl-at-scale.git",
@@ -89,8 +89,8 @@ def main():
         "job_name":       slurm["job_name"],
         # paths
         "data_dir":       paths["data_dir"],
-        "log_path":       paths["log_path"],
-        "run_dir":        paths["run_dir"],
+        # "log_path":       paths["log_path"],
+        # "run_dir":        paths["run_dir"],
         # git
         "repo":           git["repo"],
         "branch":         git["branch"],
