@@ -106,8 +106,9 @@ def main():
 
     # ---- write artifacts & submit ----
     out_dir = Path.cwd()
-    out_path = out_dir / f"rendered_{slurm['job_name']}_{slurm['num_nodes']}x{slurm['gpus_per_node']}.sbatch"
-    Path(paths["log_path"]).mkdir(parents=True, exist_ok=True)
+    out_path = out_dir / f"rendered_{slurm['job_name']}_{slurm['num_nodes']}x{slurm['gpus_per_node']}.sh"
+    # Path(paths["log_path"]).mkdir(parents=True, exist_ok=True)
+    out_dir.mkdir(parents=True, exist_ok=True)
     out_path.write_text(rendered)
     print(f"[clearml] Rendered sbatch: {out_path}")
 
