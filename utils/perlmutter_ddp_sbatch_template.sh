@@ -11,13 +11,14 @@
 #SBATCH --reservation={reservation}
 #SBATCH --module=gpu,nccl-plugin
 #SBATCH -J {job_name}
-#SBATCH -o {log_path}/%x-%j.out
+# #SBATCH -o {log_path}/%x-%j.out
+#SBATCH -o %x-%j.out
 #SBATCH --exclusive
 
 # --- user mounts ---
 DATADIR={data_dir}
-LOGDIR={log_path}
-mkdir -p "${LOGDIR}"
+# LOGDIR={log_path}
+# mkdir -p "${LOGDIR}"
 
 # --- repo checkout (reproducible) ---
 RUN_DIR={run_dir}
